@@ -3,6 +3,7 @@ package org.backy.service;
 import java.util.List;
 
 import org.backy.domain.Criteria;
+import org.backy.domain.ReplyPageDTO;
 import org.backy.domain.ReplyVO;
 import org.backy.mapper.ReplyMapper;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,11 @@ public class ReplyServiceImpl implements ReplyService{
 	@Override
 	public List<ReplyVO> getList(Criteria cri, Long bno) {
 		return mapper.getListWithPaging(cri, bno);
+	}
+
+	@Override
+	public ReplyPageDTO getListPage(Criteria cri, Long bno) {
+		return new ReplyPageDTO(mapper.getCountByBno(bno), mapper.getListWithPaging(cri, bno));
 	}
 
 }

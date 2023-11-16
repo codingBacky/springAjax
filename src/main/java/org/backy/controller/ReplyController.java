@@ -1,8 +1,7 @@
 package org.backy.controller;
 
-import java.util.List;
-
 import org.backy.domain.Criteria;
+import org.backy.domain.ReplyPageDTO;
 import org.backy.domain.ReplyVO;
 import org.backy.service.ReplyService;
 import org.springframework.http.HttpStatus;
@@ -38,11 +37,12 @@ public class ReplyController {
 	}
 	
 	@GetMapping(value = "/pages/{bno}/{page}", produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<List<ReplyVO>> getList(@PathVariable("bno")Long bno,
+	public ResponseEntity<ReplyPageDTO> getList(@PathVariable("bno")Long bno,
 												@PathVariable("page")int page){ 
 		log.info("get list bno > " + bno + "page > " + page);
 		Criteria cri = new Criteria(page, 10);
-		return new ResponseEntity<List<ReplyVO>> (service.getList(cri,bno), HttpStatus.OK);
+		return new ResponseEntity<ReplyPageDTO> 
+				(service.getListPage(cri,bno), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{rno}", produces = {MediaType.APPLICATION_JSON_VALUE})

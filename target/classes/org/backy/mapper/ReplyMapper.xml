@@ -5,10 +5,21 @@
 <mapper namespace="org.backy.mapper.ReplyMapper">
 
 	<select id="getListWithPaging" resultType="org.backy.domain.ReplyVO">
+	<![CDATA[
 		select rno, bno, reply, replyer, replydate, updatedate
-		from tbl_reply
-		where bno = #{bno}
-		order by rno asc
+		from (
+			select /*+ index(tbl_reply idx_reply)*/
+			rownum rn, bno, rno, reply, replyer, replydate, updatedate
+			from tbl_reply
+			where bno = #{bno} 
+			and rno > 0
+			and rownum <= #{cri.pageNum} * #{cri.amount}
+		)
+		where rn > (#{cri.pageNum}-1)* #{cri.amount}
+	]]>	   
+	</select>
+	<select id="getCountByBno" resultType="int">
+		select count(rno) from tbl_reply where bno = #{bno}
 	</select>
  	<insert id="insert">
  		insert into tbl_reply(rno, bno, reply, replyer)

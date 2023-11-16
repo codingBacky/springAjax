@@ -1,6 +1,5 @@
 package org.backy.mapper;
 
-import java.util.List;
 import java.util.stream.IntStream;
 
 import org.backy.domain.Criteria;
@@ -35,10 +34,14 @@ public class ReplyMapperTests {
 		for(ReplyVO vo : list)
 				log.info(vo);
 		*/
-		mapper.getListWithPaging(new Criteria(), 2228237L)
+		mapper.getListWithPaging(new Criteria(3,2), 2228237L)
 		.forEach(reply -> log.info(reply));
 		
 		}
+	@Test
+	public void testGetCountByBno() {
+		mapper.getCountByBno(2228237L);
+	}
 	
 	@Test
 	public void testCreate() {

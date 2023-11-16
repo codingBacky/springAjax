@@ -3,6 +3,7 @@ package org.backy.service;
 import java.util.List;
 
 import org.backy.domain.Criteria;
+import org.backy.domain.ReplyPageDTO;
 import org.backy.domain.ReplyVO;
 
 public interface ReplyService {
@@ -16,4 +17,6 @@ public interface ReplyService {
 	public int remove(Long rnl);
 	
 	public List<ReplyVO> getList(Criteria cri, Long bno);
+	
+	public ReplyPageDTO getListPage(Criteria cri, Long bno);
 }
